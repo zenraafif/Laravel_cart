@@ -15,4 +15,7 @@ class CartController extends Controller
     public function form(){
     	return view('form');
     }
+    public function pembelian(){
+    	return view('pembelian');
+    }
 }

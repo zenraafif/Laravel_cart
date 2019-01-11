@@ -14,7 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/test2', function () {
+    return view('test2');
+});
 
 Route::get('/cart', 'CartController@cart');
 Route::get('/form', 'CartController@form');
 Route::get('/index', 'CartController@home');
+Route::get('/pembelian', 'CartController@pembelian');
+

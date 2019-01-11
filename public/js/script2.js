@@ -16,6 +16,7 @@ function moreFields() {
 }
 
 
+
 function del() {
 var inputs = document.getElementsByTagName("input");
 for (var i = 0; i < inputs.length; i++)
@@ -28,9 +29,12 @@ for (var i = 0; i < inputs.length; i++)
 }
 }
 
+
+
 function row() {
   document.getElementById("table").deleteRow(0);
 }
+
 
 
 function deleteRow(btn) {
@@ -38,18 +42,15 @@ function deleteRow(btn) {
   row.parentNode.removeChild(row);
 }
 
-function addRow() {
-  var table = document.getElementById("table");
-  var row = table.insertRow(2);
-  var cell1 = row.insertCell(0);
-  var cell2 = row.insertCell(1);
-  cell1.innerHTML = "NEW CELL1";
-  cell2.innerHTML = "NEW CELL2";
-}
+
+
+
 function add_fields() {    
 document.getElementById("table").insertRow(-1).innerHTML = 
 '<td><input type="text" ></td> <td><input type="text" id="answer" ></td ></td> <td><input type="text" id="answer" ></td ></td> <td><input type="text" id="answer" ></td ><td><input type="text" id="answer" ></textarea></td ><td><input type="text" id="answer" ></textarea></td ><td><input type="button" name="" value="hapus" onclick="deleteRow(this)"></td></tr>';
 }
+
+
 
 function addFields() {
   var table = document.getElementById("table");
@@ -62,13 +63,48 @@ function addFields() {
   var cell6 = row.insertCell(5);
   var cell7 = row.insertCell(6);
   var cell8 = row.insertCell(7);
-  cell1.innerHTML = '<td><input name="data[]" type="text" ></td>';
-  cell2.innerHTML = '<td><input name="data[]" type="text" ></td>';
-  cell3.innerHTML = '<td><input name="data[]" type="text" ></td>';
-  cell4.innerHTML = '<td><input name="data[]" type="number" ></td>';
-  cell5.innerHTML = '<td><input name="data[]" type="number" ></td>';
-  cell6.innerHTML = '<td><input name="data[]" type="number"></td>';
-  cell7.innerHTML = '<td><input type="button" name="" value="hapus" onclick="deleteRow(this)"></td>';
+  cell1.innerHTML = '<td><input type="text"     name="data[]"   placeholder="Part"                                                                                      ></td>';
+  cell2.innerHTML = '<td><input type="text"     name="data[]"   placeholder="Merk"                                                                                      ></td>';
+  cell3.innerHTML = '<td><input type="text"     name="data[]"   placeholder="No Serial"                                                                                 ></td>';
+  cell4.innerHTML = '<td><input type="number"   name="data[]"   placeholder="Quantity"  onchange="return subt();" class="qty"               id="qty"                    ></td>';
+  cell5.innerHTML = '<td><input type="number"   name="data[]"   placeholder="Harga"     onchange="return subt();" class="price"             id="price"                  ></td>';
+  cell6.innerHTML = '<td><input type="number"   name="data[]"   placeholder="Sub Total"                           class="subtotal"          id="subtotal"               ></td>';
+  cell7.innerHTML = '<td><input type="button"   name="" value="hapus" onclick="deleteRow(this)"></td>';
 }
+
+
+
+
+
+function subtotal(){
+    var qty = parseInt(document.getElementById("qty").value);
+    var price = parseInt(document.getElementById("price").value);
+    var result = qty*price;
+
+    document.getElementById("subtotal").value=result; 
+}
+
+function total(){
+    var qty = parseInt(document.getElementsByName("qty").value);
+    var price = parseInt(document.getElementsByName("price").value);
+    console.log(price);
+    var result = qty*price;
+
+    document.getElementsByName("subtotal").value=result; 
+}
+
+function subt(){
+    var y = document.getElementsByClassName('foo');
+var aNode = y[0];
+    var qty = document.getElementsByClassName('qty').value;
+    var price = document.getElementsByClassName("price")    .value;
+    var test = document.getElementsByClassName("qty")   .value;
+     var result = parseInt(qty)*parseInt(price);
+
+     console.log(qty);
+
+     document.getElementsByClassName("subtotal").value=result; 
+}
+
 
 window.onload = moreFields;
