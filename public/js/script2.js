@@ -38,11 +38,24 @@ function row() {
 
 
 function deleteRow(btn) {
-  var row = btn.parentNode.parentNode;
-  row.parentNode.removeChild(row);
+    var add = document.getElementById('myTable').rows.length;
+    console.log(add); 
+    if (add <= 3) {
+        alert('tabel terakhir tidak bisa dihapus');
+    } else{
+        var row = btn.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+    }
+    
 }
 
-
+function cloneRow() {
+      var row = document.getElementById("rowToClone"); // find row to copy
+      var table = document.getElementById("tableToModify"); // find table to append to
+      var clone = row.cloneNode(true); // copy children too
+      clone.id = "newID"; // change id or other attributes/contents
+      table.appendChild(clone); // add new row to end of table
+    }
 
 
 function add_fields() {    
@@ -53,7 +66,7 @@ document.getElementById("table").insertRow(-1).innerHTML =
 
 
 function addFields() {
-  var table = document.getElementById("table");
+  var table = document.getElementById("myTable");
   var row = table.insertRow(-1);
   var cell1 = row.insertCell(0);
   var cell2 = row.insertCell(1);
@@ -63,7 +76,7 @@ function addFields() {
   var cell6 = row.insertCell(5);
   var cell7 = row.insertCell(6);
   var cell8 = row.insertCell(7);
-  cell1.innerHTML = '<td><input type="text"     name="data[]"   placeholder="Part"                                                                                      ></td>';
+  cell1.innerHTML = '<td><input type="text" name="data[]"></td>';
   cell2.innerHTML = '<td><input type="text"     name="data[]"   placeholder="Merk"                                                                                      ></td>';
   cell3.innerHTML = '<td><input type="text"     name="data[]"   placeholder="No Serial"                                                                                 ></td>';
   cell4.innerHTML = '<td><input type="number"   name="data[]"   placeholder="Quantity"  onchange="return subt();" class="qty"               id="qty"                    ></td>';
@@ -85,12 +98,10 @@ function subtotal(){
 }
 
 function total(){
-    var qty = parseInt(document.getElementsByName("qty").value);
-    var price = parseInt(document.getElementsByName("price").value);
-    console.log(price);
-    var result = qty*price;
+    var qty = parseInt(document.getElementById("subtotal").value);
 
-    document.getElementsByName("subtotal").value=result; 
+
+    document.getElementById("total").value=qty; 
 }
 
 function subt(){
@@ -101,7 +112,6 @@ var aNode = y[0];
     var test = document.getElementsByClassName("qty")   .value;
      var result = parseInt(qty)*parseInt(price);
 
-     console.log(qty);
 
      document.getElementsByClassName("subtotal").value=result; 
 }

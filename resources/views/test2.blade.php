@@ -43,11 +43,6 @@
 	                            <td class="text-center bold">1</td>
 	                            <td class="text-right bold"><b class="total">0</b></td>
 	                        </tr>
-	                        <tr>
-	                            <td></td>
-	                            <td></td>
-	                            <td></td>
-	                        </tr>
 	                    </tbody>
 	                </table>
 
