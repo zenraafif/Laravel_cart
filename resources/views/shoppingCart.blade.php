@@ -13,12 +13,6 @@
     border-radius: 5px;
     padding: 5px;
   }
-  #total{
-    width: auto;
-    max-width: 100px;
-    border-radius: 5px;
-    padding: 5px;
-  }
   .container table thead tr td input {
     width: 100%;
     border-radius: 5px;
@@ -28,7 +22,7 @@
 </head>
 <body>
   <div class="container">
-    <input type="button" id="more_fields" onclick="addFields();totalamount();" value="Add More" class="btn btn-info ml-3 mt-5 mb-4" />  
+    <input type="button" id="more_fields" onclick="cloneRow();totalamount();" value="Add More" class="btn btn-info ml-3 mt-5 mb-4" />  
     <table class="table" id="myTable">
       <thead>
         <tr class="text-center">
@@ -45,33 +39,34 @@
       <div id="readroot" style="display: none"></div>
       <form id="reset">
         <tbody class="text-center body" id="tableToModify">
-          <tr data-id="1" id="rowToClone">
-            <td><input type="text" name="data[]" placeholder="Part"></td>
-            <td><input type="text" name="data[]" placeholder="Merk"></td>
-            <td><input type="text" name="data[]" placeholder="No Serial"></td>
-            <td><input type="number" class="product_quantities" id="qty" name="data[]" placeholder="Jumlah"></td>
-            <td><input type="number" class="price" id="price" name="price" placeholder="Harga"></td>
-            <td><input type="text" class="subtotal amount" id="subtotal" name="data[]" placeholder="Sub Total"  readonly></td>
-            <td><button onclick="delRow(this);totalamount();">Hapus</button></td>
-          </tr>
-        </tbody>
-      </form>
-    </table>
-   {{--  <div class="container text-right">
-    <div class="row" >
-      Total :<input id="total" class="total">
+          <tr data-id="1" id="rowToClone" class="abc">
+            <td><input type="text" name="part[]" placeholder="Part"></td>
+            <td><input type="text" name="merk[]" placeholder="Merk"></td>
+            <td><input type="text" name="serial[]" placeholder="No Serial"></td>
+            <td><input type="number" class="product_quantities" id="qty" name="jumlah[]" placeholder="Jumlah"></td>
+            <td><input type="number" class="price" id="price" name="price[]" placeholder="Harga"></td>
+            <td><input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" value="" readonly=""></td>
+            <td>
+              <input type="button" name="" value="Hapus" onclick="deleteRow(this);totalamount();" ></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td class="text-center bold" colspan="4"></td>
+              <td class="text-center bold">TOTAL</td>
+              <td class="text-center bold "><input id="total" class="total" readonly></td>
+            </tr>
+          </tfoot>
+        </form>
+      </table>
     </div>
-  </div>
-  </div> --}}
-  <section>
-    <div class="container">
-      <div class="row" style="float: right;">
-        <input type="number" name="data[]" class="total" id="total">
-      </div>
-    </div>
-  </section>
-  <script type="text/javascript">
-    function totalamount() {
+    <script type="text/javascript">
+      function reset(){
+        document.getElementById("reset").onclick = function() {
+          document.getElementById("numbers").innerHTML = "";
+        };
+      }
+      function totalamount() {
         // var q = parseInt(getElementById('#total')).value;
         var q = 0;
         var rows = document.getElementById('myTable').getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
@@ -88,6 +83,7 @@
       }
 
       $(function () { 
+        $('tabel').find('tr[data-id=""]')
         $('.body').delegate('input','change',function(){
           var tr = $(this).parent().parent();
           var qty = tr.find('input.product_quantities').val();
