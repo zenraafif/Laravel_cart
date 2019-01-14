@@ -25,5 +25,7 @@ Route::get('/cart', 'CartController@cart');
 Route::get('/form', 'CartController@form');
 Route::get('/index', 'CartController@home');
 // Route::get('/pembelian', 'CartController@pembelian');
-Route::get('/pembelian', 'CartController@pembelian');
+Route::get('/checkout', 'CartController@checkout');
 
+Route::get('/pembelian', 'CartController@pembelian');
+Route::post('pembelian/buat_pinjaman', 'CartController@TambahPinjamanAction');

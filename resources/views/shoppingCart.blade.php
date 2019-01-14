@@ -3,69 +3,61 @@
 <head>
   <title>Shopping Cart</title>
   <script type="text/javascript" src="{{ asset('js/script2.js') }}"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <link href="{{ asset('css/mystyle.css') }}" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <style type="text/css">
-  .container table tbody tr td input {
-    width: auto;
-    max-width: 100px;
-    border-radius: 5px;
-    padding: 5px;
-  }
-  .container table thead tr td input {
-    width: 100%;
-    border-radius: 5px;
-    padding: 5px;
-  }
-</style>
+  <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/mystyle.css') }}" >
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
 </head>
 <body>
   <div class="container">
-    <input type="button" id="more_fields" onclick="cloneRow();totalamount();" value="Add More" class="btn btn-info ml-3 mt-5 mb-4" />  
-    <table class="table" id="myTable">
-      <thead>
-        <tr class="text-center">
-          <th scope="col">PART</th>
-          <th scope="col">MERK</th>
-          <th scope="col">NO SERIAL</th>
-          <th scope="col">QTY</th>
-          <th scope="col">HARGA SATUAN</th>
-          <th scope="col">SUB TOTAL</th>
-          <th scope="col">HAPUS</th>
-        </tr>
-      </thead>
-      {{-- data-price="15.00" --}}
-      <div id="readroot" style="display: none"></div>
-      <form id="reset">
-        <tbody class="text-center body" id="tableToModify">
-          <tr data-id="1" id="rowToClone" class="abc">
-            <td><input type="text" name="part[]" placeholder="Part"></td>
-            <td><input type="text" name="merk[]" placeholder="Merk"></td>
-            <td><input type="text" name="serial[]" placeholder="No Serial"></td>
-            <td><input type="number" class="product_quantities" id="qty" name="jumlah[]" placeholder="Jumlah"></td>
-            <td><input type="number" class="price" id="price" name="price[]" placeholder="Harga"></td>
-            <td><input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" value="" readonly=""></td>
-            <td>
-              <input type="button" name="" value="Hapus" onclick="deleteRow(this);totalamount();" ></td>
+    <input type="button" id="more_fields" onclick="cloneRow();totalamount();" value="Add More" class="btn btn-info ml-3 mt-5 mb-4" />
+    @if (session('message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>{{ session('message') }}</strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    @endif
+      <form method="post" action="{{ url('pembelian/buat_pinjaman') }}"> 
+        <table class="table" id="myTable">
+          <thead>
+            <tr class="text-center">
+              <th scope="col">PART</th>
+              <th scope="col">MERK</th>
+              <th scope="col">NO SERIAL</th>
+              <th scope="col">QTY</th>
+              <th scope="col">HARGA SATUAN</th>
+              <th scope="col">SUB TOTAL</th>
+              <th scope="col">HAPUS</th>
+            </tr>
+          </thead>
+          <tbody class="text-center body" id="tableToModify">
+            <tr id="rowToClone" class="abc">
+              <td><input type="text" name="part[]" placeholder="Part"></td>
+              <td><input type="text" name="merk[]" placeholder="Merk"></td>
+              <td><input type="text" name="serial[]" placeholder="No Serial"></td>
+              <td><input type="number" class="product_quantities" id="qty" name="quantity[]" placeholder="Jumlah"></td>
+              <td><input type="number" class="price" id="price" name="price[]" placeholder="Harga"></td>
+              <td><input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" value="" readonly=""></td>
+              <td>
+                <input class="btn btn-danger" type="button" value="Hapus" onclick="deleteRow(this);totalamount();" ></td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
               <td class="text-center bold" colspan="4"></td>
-              <td class="text-center bold">TOTAL</td>
-              <td class="text-center bold "><input id="total" class="total" readonly></td>
+              <td class="text-center bold"><b>TOTAL :</b></td>
+              <td class="text-center bold "><input id="total" class="total" name="total" readonly style="border: none;"></td>
             </tr>
           </tfoot>
-        </form>
-      </table>
+        </table>
+        <div class="text-right">
+          <button class="btn btn-primary">Simpan</button>
+        </div>
+        {{ csrf_field() }}
+      </form>
     </div>
     <script type="text/javascript">
-      function reset(){
-        document.getElementById("reset").onclick = function() {
-          document.getElementById("numbers").innerHTML = "";
-        };
-      }
       function totalamount() {
         // var q = parseInt(getElementById('#total')).value;
         var q = 0;
@@ -78,8 +70,8 @@
             q +=Number(z);
           }
         }
-        document.getElementById("total").value=q; 
-        // $('.total').html(q);
+        // document.getElementById("total").value=q; 
+        $('#total').val(q);
       }
 
       $(function () { 
@@ -95,43 +87,9 @@
         });
       });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
   </html>
-  {{-- https://jsfiddle.net/fw8t3ehs/4/ --}}
-   {{--  <a class="test" name="Name 1"></a>
-    <a class="test" name="Name 2"></a>
-    <a class="test" name="Name 3"></a>
-    <a class="test" name="Name 3"></a> --}}
-
-
-    {{-- <script type="text/javascript">
-      var elements = document.getElementsByClassName("test");
-      var qty = document.getElementsByClassName("qty").value;
-    var price = document.getElementsByClassName("price").value;
-     var result = parseInt(qty)*parseInt(price);
-
-      var names = '';
-      for(var i=0; i<elements.length; i++) {
-          names += elements[i].name;
-      }
-      document.write(names);
-    </script> --}}
-
-    {{-- <script type="text/javascript">
-      function addNumber(divName){    
-        var sum = document.getElementById('sum');
-        var newdiv = document.createElement('div');
-        newdiv.innerHTML = "<input type='text' name='number" + counter + "'>";
-        document.getElementById(divName).appendChild(newdiv);
-        sum.value = getSum(counter);
-        counter++;    
-        
-   }
-      function getSum(numberOfDivs) {
-        var sum = 0;
-        for (var i=0 ; i<numberOfDivs; i++) {
-          sum += parseInt(document.getElementsByName('number' + i)[0].value);
-        }
-        return sum;
-      }
-    </script> --}}
+  <!-- https://jsfiddle.net/fw8t3ehs/4/ -->
+   

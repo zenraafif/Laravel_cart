@@ -4,7 +4,7 @@ function cloneRow() {
       // var clone = row.cloneNode(true); // copy children too
       // clone.id = "newID"; // change id or other attributes/contents
       // table.appendChild(clone).value="hapus"; // add new row to end of table
-      let html = '<tr><td><input type="text" name="part[]" placeholder="Part"></td><td><input type="text" name="merk[]" placeholder="Merk"></td><td><input type="text" name="serial[]" placeholder="No Serial"></td><td><input type="number" class="product_quantities" id="qty" name="jumlah[]" placeholder="Jumlah"></td><td><input type="number" class="price" id="price" name="price[]" placeholder="Harga"></td><td><input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" value="" readonly></td><td><input type="button" name="" value="Hapus" onclick="deleteRow(this);totalamount();" ></td></tr>'
+      let html = '<tr data-id="1" id="rowToClone" class="abc"><td><input type="text" name="part[]" placeholder="Part"></td><td><input type="text" name="merk[]" placeholder="Merk"></td><td><input type="text" name="serial[]" placeholder="No Serial"></td><td><input type="number" class="product_quantities" id="qty" name="quantity[]" placeholder="Jumlah"></td><td><input type="number" class="price" id="price" name="price[]" placeholder="Harga"></td><td><input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" value="" readonly=""></td><td><input class="btn btn-danger" type="button" value="Hapus" onclick="deleteRow(this);totalamount();" ></td></tr>'
       $('#myTable').find('tbody').append(html)
   }
 
@@ -18,7 +18,6 @@ function cloneRow() {
         var row = btn.parentNode.parentNode;
         row.parentNode.removeChild(row);
     }
-    
 }
 function delRow(btn) {
     var add = document.getElementById('myTable').rows.length;
@@ -32,20 +31,20 @@ function delRow(btn) {
 
 var counter = 0;
 
-function moreFields() {
-    counter++;
-    var newFields = document.getElementById('readroot').cloneNode(true);
-    newFields.id = '';
-    newFields.style.display = 'block';
-    var newField = newFields.childNodes;
-    for (var i=0;i<newField.length;i++) {
-        var theName = newField[i].name
-        if (theName)
-            newField[i].name = theName + counter;
-    }
-    // var insertHere = document.getElementById('writeroot');
-    // insertHere.parentNode.insertBefore(newFields,insertHere);
-}
+// function moreFields() {
+//     counter++;
+//     var newFields = document.getElementById('readroot').cloneNode(true);
+//     newFields.id = '';
+//     newFields.style.display = 'block';
+//     var newField = newFields.childNodes;
+//     for (var i=0;i<newField.length;i++) {
+//         var theName = newField[i].name
+//         if (theName)
+//             newField[i].name = theName + counter;
+//     }
+//     // var insertHere = document.getElementById('writeroot');
+//     // insertHere.parentNode.insertBefore(newFields,insertHere);
+// }
 
 
 
@@ -132,4 +131,4 @@ function subt(){
 }
 
 
-window.onload = moreFields;
+// window.onload = moreFields;
