@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Shopping Cart</title>
+  <title>Details</title>
   <script type="text/javascript" src="{{ asset('js/script2.js') }}"></script>
   <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
   <link rel="stylesheet" type="text/css" href="{{ asset('css/mystyle.css') }}" >
   <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
 </head>
 <body>
-  <h2 class="mt-5 text-center">Buat Pesanan</h2>
-  <hr width="100px">
   <div class="container">
-    <input type="button" id="more_fields" onclick="cloneRow();totalamount();" value="Add More" class="btn btn-info ml-3 mt-2 mb-4" />
+  	<h2 class="text-center mt-5">Order Details</h2>
+  	<hr width="100px" class="mb-5">
     @if (session('alert-success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
           <strong>{{ session('alert-success') }}</strong>
@@ -25,7 +24,9 @@
             <div>{{Session::get('alert')}}</div>
         </div>
     @endif
-      <form method="post" action="{{ url('pembelian/simpan') }}"> 
+    @foreach ($master as $rows)	
+      <form method="post" action="action/{{ $rows->id }}">
+    @endforeach
         <table class="table" id="myTable">
           <thead>
             <tr class="text-center">
@@ -39,23 +40,27 @@
             </tr>
           </thead>
           <tbody class="text-center body" id="tableToModify">
+          @foreach ($orders_details as $row)
             <tr id="rowToClone" class="abc">
-              <td><input type="text" name="part[]" placeholder="Part"></td>
-              <td><input type="text" name="merk[]" placeholder="Merk"></td>
-              <td><input type="text" name="serial[]" placeholder="No Serial"></td>
-              <td><input type="number" class="product_quantities" id="qty" name="quantity[]" placeholder="Jumlah"></td>
-              <td><input type="number" class="price" id="price" name="price[]" placeholder="Harga"></td>
-              <td><input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" value="" readonly=""></td>
+              <td><input type="text" name="part[]" placeholder="Part" value="{{$row->part}}"></td>
+              <td><input type="text" name="merk[]" placeholder="Merk" value="{{$row->merk}}"></td>
+              <td><input type="text" name="serial[]" placeholder="No Serial" value="{{$row->no_serial}}"></td>
+              <td><input type="number" class="product_quantities" id="qty" name="quantity[]" placeholder="Jumlah" value="{{$row->quantity}}"></td>
+              <td><input type="number" class="price" id="price" name="price[]" placeholder="Harga" value="{{$row->price}}"></td>
+              <td><input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" readonly="" value="{{$row->subtotal}}"></td>
               <td>
-                <input class="btn btn-danger" type="button" value="Hapus" onclick="deleteRow(this);totalamount();" ></td>
+                <input class="btn btn-danger" type="button" value="Hapus"></td>
             </tr>
+		  @endforeach
           </tbody>
           <tfoot>
+          	@foreach ($master as $row)
             <tr>
               <td class="text-center bold" colspan="4"></td>
               <td class="text-center bold"><b>TOTAL :</b></td>
-              <td class="text-center bold "><input id="total" class="total" name="total" readonly style="border: none;"></td>
+              <td class="text-center bold "><input id="total" class="total" name="total" readonly style="border: none;" value="{{$row->total}}"></td>
             </tr>
+          	@endforeach
           </tfoot>
         </table>
         <div class="text-right">
@@ -100,4 +105,3 @@
   </body>
   </html>
   <!-- https://jsfiddle.net/fw8t3ehs/4/ -->
-   
