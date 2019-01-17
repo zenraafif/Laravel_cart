@@ -52,7 +52,7 @@
               <td>Rp.<input type="number" class="price" id="price" name="price[]" placeholder="Harga" value="{{$row->price}}"></td>
               <td>Rp.<input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" readonly="" value="{{$row->subtotal}}"></td>
               <td>
-                <a class="btn btn-danger btn-sm" href="hapusDetailOrder/{{$row->id}}">hapus</a>
+                <a class="btn btn-danger btn-sm" href="hapusDetailOrder/{{$row->id}}"><i class="far fa-trash-alt"></i></a>
                </td>
             </tr>
 		  @endforeach
