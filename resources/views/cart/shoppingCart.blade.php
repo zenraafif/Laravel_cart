@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Details</title>
-  <script type="text/javascript" src="{{ asset('js/script2.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/mystyle.css') }}" >
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-</head>
+@extends('cart.template.master')
+@section('title', 'Pembelian')
+
+@section('content')
+
 <body>
+  <h2 class="mt-4 text-center">Buat Pesanan</h2>
+  <hr width="100px">
   <div class="container">
-  	<h2 class="text-center mt-5">Order Details</h2>
-  	<hr width="100px" class="mb-5">
+    <input type="button" id="more_fields" onclick="cloneRow();totalamount();" value="Tambah Lagi +" class="btn btn-info ml-3 mt-2 mb-4" />
     @if (session('alert-success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
           <strong>{{ session('alert-success') }}</strong>
@@ -24,9 +21,7 @@
             <div>{{Session::get('alert')}}</div>
         </div>
     @endif
-    @foreach ($master as $rows)	
-      <form method="post" action="action/{{ $rows->id }}">
-    @endforeach
+      <form method="post" action="{{ url('pembelian/simpan') }}"> 
         <table class="table" id="myTable">
           <thead>
             <tr class="text-center">
@@ -36,31 +31,27 @@
               <th scope="col">QTY</th>
               <th scope="col">HARGA SATUAN</th>
               <th scope="col">SUB TOTAL</th>
-              <th scope="col">HAPUS</th>
+              <th scope="col">AKSI</th>
             </tr>
           </thead>
           <tbody class="text-center body" id="tableToModify">
-          @foreach ($orders_details as $row)
             <tr id="rowToClone" class="abc">
-              <td><input type="text" name="part[]" placeholder="Part" value="{{$row->part}}"></td>
-              <td><input type="text" name="merk[]" placeholder="Merk" value="{{$row->merk}}"></td>
-              <td><input type="text" name="serial[]" placeholder="No Serial" value="{{$row->no_serial}}"></td>
-              <td><input type="number" class="product_quantities" id="qty" name="quantity[]" placeholder="Jumlah" value="{{$row->quantity}}"></td>
-              <td><input type="number" class="price" id="price" name="price[]" placeholder="Harga" value="{{$row->price}}"></td>
-              <td><input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" readonly="" value="{{$row->subtotal}}"></td>
+              <td><input type="text" name="part[]" placeholder="Part"></td>
+              <td><input type="text" name="merk[]" placeholder="Merk"></td>
+              <td><input type="text" name="serial[]" placeholder="No Serial"></td>
+              <td><input type="number" class="product_quantities" id="qty" name="quantity[]" placeholder="Jumlah"></td>
+              <td><input type="number" class="price" id="price" name="price[]" placeholder="Harga"></td>
+              <td><input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" value="" readonly=""></td>
               <td>
-                <input class="btn btn-danger" type="button" value="Hapus"></td>
+                <input class="btn btn-danger" type="button" value="Hapus" onclick="deleteRow(this);totalamount();" ></td>
             </tr>
-		  @endforeach
           </tbody>
           <tfoot>
-          	@foreach ($master as $row)
             <tr>
               <td class="text-center bold" colspan="4"></td>
               <td class="text-center bold"><b>TOTAL :</b></td>
-              <td class="text-center bold "><input id="total" class="total" name="total" readonly style="border: none;" value="{{$row->total}}"></td>
+              <td class="text-center bold "><input id="total" class="total" name="total" readonly style="border: none;"></td>
             </tr>
-          	@endforeach
           </tfoot>
         </table>
         <div class="text-right">
@@ -100,8 +91,8 @@
         });
       });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
   </html>
   <!-- https://jsfiddle.net/fw8t3ehs/4/ -->
+@endsection
+   

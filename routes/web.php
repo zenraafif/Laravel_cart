@@ -12,13 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('cart.home');
 });
 Route::get('/test2', function () {
     return view('test2');
 });
 Route::get('/pembelian', function () {
-    return view('shoppingCart');
+    return view('cart.shoppingCart');
 });
 // Route::get('/checkout', function () {
 //     return view('checkout');
@@ -32,7 +32,7 @@ Route::get('/checkout', 'CartController@checkout');
 
 // Route::get('/pembelian', 'CartController@pembelian');
 Route::post('pembelian/simpan', 'CartController@TambahPinjamanAction');
-Route::post('edit/action/{id}', 'CartController@getEditAction');
+Route::post('edit/action/{id}', 'CartController@edit_action');
 
 Route::post('pembelian/checkout', 'CartController@checkout');
 Route::post('pembelian/checkout_view', 'CartController@checkoutPost');
@@ -42,4 +42,5 @@ Route::get('/riwayat', 'CartController@riwayat');
 Route::get('/hapus/{id}','CartController@hapusRiwayat');
 Route::get('/edit/{id}','CartController@getEdit');
 Route::post('edit/editAction/{id}','CartController@');
+Route::get('/edit/hapusDetailOrder/{id}','CartController@hapusOrder');
 

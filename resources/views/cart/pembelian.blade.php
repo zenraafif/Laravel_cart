@@ -1,31 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Shopping Cart</title>
-  <script type="text/javascript" src="{{ asset('js/script2.js') }}"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <link href="{{ asset('css/mystyle.css') }}" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <style type="text/css">
-  .container table tbody tr td input {
-    width: auto;
-    max-width: 100px;
-    border-radius: 5px;
-    padding: 5px;
-  }
-  #total{
-    width: auto;
-    max-width: 100px;
-    border-radius: 5px;
-    padding: 5px;
-  }
-  .container table thead tr td input {
-    width: 100%;
-    border-radius: 5px;
-    padding: 5px;
-  }
-</style>
-</head>
+@extends('cart.template.master')
+@section('title', 'Pembelian')
+
+@section('content')
 <body>
   <div class="container">
     <input type="button" id="more_fields" onclick="addFields();totalamount();" value="Add More" class="btn btn-info ml-3 mt-5 mb-4" />  
@@ -57,21 +33,15 @@
         </tbody>
       </form>
     </table>
-   {{--  <div class="container text-right">
-    <div class="row" >
-      Total :<input id="total" class="total">
-    </div>
-  </div>
-  </div> --}}
-  <section>
-    <div class="container">
-      <div class="row" style="float: right;">
-        <input type="number" name="data[]" class="total" id="total">
+    <section>
+      <div class="container">
+        <div class="row" style="float: right;">
+          <input type="number" name="data[]" class="total" id="total">
+        </div>
       </div>
-    </div>
-  </section>
-  <script type="text/javascript">
-    function totalamount() {
+    </section>
+    <script type="text/javascript">
+      function totalamount() {
         // var q = parseInt(getElementById('#total')).value;
         var q = 0;
         var rows = document.getElementById('myTable').getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
@@ -101,6 +71,22 @@
     </script>
   </body>
   </html>
+  @endsection  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   {{-- https://jsfiddle.net/fw8t3ehs/4/ --}}
    {{--  <a class="test" name="Name 1"></a>
     <a class="test" name="Name 2"></a>
@@ -139,3 +125,4 @@
         return sum;
       }
     </script> --}}
+@endsection

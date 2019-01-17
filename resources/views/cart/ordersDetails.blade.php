@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Shopping Cart</title>
-  <script type="text/javascript" src="{{ asset('js/script2.js') }}"></script>
-  <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/mystyle.css') }}" >
-  <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-</head>
+@extends('cart.template.master')
+@section('title', 'Pembelian')
+<style type="text/css">
+  input{
+    border: none;
+  }
+</style>
+@section('content')
 <body>
-  <h2 class="mt-5 text-center">Buat Pesanan</h2>
-  <hr width="100px">
   <div class="container">
-    <input type="button" id="more_fields" onclick="cloneRow();totalamount();" value="Add More" class="btn btn-info ml-3 mt-2 mb-4" />
+  	<h2 class="text-center mt-4">Detail Transaksi</h2>
+  	<hr width="100px" class="mb-5">
     @if (session('alert-success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
           <strong>{{ session('alert-success') }}</strong>
@@ -25,7 +23,12 @@
             <div>{{Session::get('alert')}}</div>
         </div>
     @endif
-      <form method="post" action="{{ url('pembelian/simpan') }}"> 
+    @foreach ($master as $rows)	
+      <form method="post" action="action/{{ $rows->id }}">
+    @endforeach
+    <div class="font-weight-light text-right text-dark mr-5 mb-2">
+      <span class="bg-warning p-1"><b>*Click to edit</b></span>
+    </div>
         <table class="table" id="myTable">
           <thead>
             <tr class="text-center">
@@ -39,27 +42,35 @@
             </tr>
           </thead>
           <tbody class="text-center body" id="tableToModify">
-            <tr id="rowToClone" class="abc">
-              <td><input type="text" name="part[]" placeholder="Part"></td>
-              <td><input type="text" name="merk[]" placeholder="Merk"></td>
-              <td><input type="text" name="serial[]" placeholder="No Serial"></td>
-              <td><input type="number" class="product_quantities" id="qty" name="quantity[]" placeholder="Jumlah"></td>
-              <td><input type="number" class="price" id="price" name="price[]" placeholder="Harga"></td>
-              <td><input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" value="" readonly=""></td>
+          @foreach ($orders_details as $row)
+            <tr id="rowToClone">
+              <input type="hidden" name="id[]" placeholder="Part" value="{{$row->id}}">
+              <td><input type="text" name="part[]" placeholder="Part" value="{{$row->part}}"></td>
+              <td><input type="text" name="merk[]" placeholder="Merk" value="{{$row->merk}}"></td>
+              <td><input type="text" name="serial[]" placeholder="No Serial" value="{{$row->no_serial}}"></td>
+              <td><input type="number" class="product_quantities" id="qty" name="quantity[]" placeholder="Jumlah" value="{{$row->quantity}}"></td>
+              <td>Rp.<input type="number" class="price" id="price" name="price[]" placeholder="Harga" value="{{$row->price}}"></td>
+              <td>Rp.<input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" readonly="" value="{{$row->subtotal}}"></td>
               <td>
-                <input class="btn btn-danger" type="button" value="Hapus" onclick="deleteRow(this);totalamount();" ></td>
+                <a class="btn btn-danger btn-sm" href="hapusDetailOrder/{{$row->id}}">hapus</a>
+               </td>
             </tr>
+		  @endforeach
           </tbody>
           <tfoot>
+          	@foreach ($master as $row)
             <tr>
               <td class="text-center bold" colspan="4"></td>
               <td class="text-center bold"><b>TOTAL :</b></td>
-              <td class="text-center bold "><input id="total" class="total" name="total" readonly style="border: none;"></td>
+              <td class="text-center bold ">Rp.<input id="total" class="total" name="total" readonly style="border: none;" value="{{$row->total}}"></td>
+              <td></td>
             </tr>
+          	@endforeach
           </tfoot>
         </table>
-        <div class="text-right">
-          <input class="btn btn-primary" type="submit" name="simpan" value="Simpan" />
+        <div class="text-center mt-5 mb-5">
+          <button class="btn btn-success" name="simpan" style="width: 25%"><b>simpan</b></button>
+          {{-- <input class="btn btn-primary" type="submit" name="simpan" value="Simpan" /> --}}
           {{-- <input class="btn btn-warning" type="submit" name="checkout" value="CheckOut" /> --}}
         </div>
         {{ csrf_field() }}
@@ -95,9 +106,7 @@
         });
       });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
   </html>
   <!-- https://jsfiddle.net/fw8t3ehs/4/ -->
-   
+@endsection
