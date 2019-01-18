@@ -6,7 +6,7 @@
   }
 </style>
 @section('content')
-<body>
+<body onload="totalamount();">
   <div class="container">
   	<h2 class="text-center mt-4">Detail Transaksi</h2>
   	<hr width="100px" class="mb-5">
@@ -52,8 +52,11 @@
               <td>Rp.<input type="number" class="price" id="price" name="price[]" placeholder="Harga" value="{{$row->price}}"></td>
               <td>Rp.<input type="text" class="subtotal amount" id="subtotal" name="subtotal[]" placeholder="Sub Total" readonly="" value="{{$row->subtotal}}"></td>
               <td>
-                <a class="btn btn-danger btn-sm" href="hapusDetailOrder/{{$row->id}}"><i class="far fa-trash-alt"></i></a>
+                <a name="hapus" class="btn btn-danger btn-sm" onclick="deleteRow(this);totalamount();" href="hapusDetailOrder/{{$row->id}}"><i class="far fa-trash-alt"></i></a>
                </td>
+               {{-- <td>
+                 <input class="btn btn-danger" type="button" value="Hapus" onclick="deleteRow(this);totalamount();" ></td>
+               </td> --}}
             </tr>
 		  @endforeach
           </tbody>

@@ -11,22 +11,15 @@ function cloneRow() {
   function deleteRow(btn) {
     var add = document.getElementById('myTable').rows.length;
     document.getElementById('writeroot');
-    console.log(add); 
+    console.log(add);
     if (add === 3) {
-        alert('tabel terakhir tidak bisa dihapus');
-    } else{
-        var row = btn.parentNode.parentNode;
+        
+    }else{
+      var row = btn.parentNode.parentNode;
         row.parentNode.removeChild(row);
     }
-}
-function delRow(btn) {
-    var add = document.getElementById('myTable').rows.length;
-    document.getElementById('writeroot');
-    console.log(add); 
-    
-    var row = btn.parentNode.parentNode;
-    row.parentNode.removeChild(row);
-    
+
+    document.location.reload(true)
 }
 
 var counter = 0;

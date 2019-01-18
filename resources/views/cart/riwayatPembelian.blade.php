@@ -5,8 +5,11 @@
 
 <body>
 	<div class="container">
+		{{-- title body --}}
 		<h2 class="text-center mt-4">Riwayat Transaksi</h2>
 		<hr class="mb-5" width="100px">
+		{{-- title body --}}
+		{{-- alert --}}
 		@if (session('alert-success'))
 		<div class="alert alert-success alert-dismissible fade show" role="alert">
 			<strong>{{ session('alert-success') }}</strong>
@@ -20,7 +23,10 @@
 			<div>{{Session::get('alert')}}</div>
 		</div>
 		@endif
+		{{-- alert --}}
 	</div>
+
+	{{-- tabel riwayat --}}
 	<section>
 		<div class="container">
 			<div class="row">
@@ -32,11 +38,6 @@
 							<th scope="col">ID pembayaran</th>
 							<th scope="col">Total</th>
 							<th scope="col">Aksi</th>
-				      {{-- <th scope="col">NO SERIAL</th>
-				      <th scope="col">QTY</th>
-				      <th scope="col">HARGA SATUAN</th>
-				      <th scope="col">SUB TOTAL</th>
-				      <th scope="col">ACTION</th> --}}
 				     </tr>
 				    </thead>
 				    @php
@@ -48,10 +49,6 @@
 				    	<td>{{date('d F Y', strtotime($row->created_at))}}</td>
 				    	<td><a href="">#{{$row->payment_id}}</a></td>
 				    	<td>Rp.{{ number_format($row->total) }}</td>
-				  		{{-- <td>{{$row->no_serial}}</td>
-				  		<td>{{$row->quantity}}</td>
-				  		<td>{{$row->price}}</td>
-				  		<td>{{$row->subtotal}}</td> --}}
 				  		<td>
 				  			<a id="hapus" class="btn btn-danger btn-sm" name="hapus"  href="hapus/{{$row->id}}" onclick="totalamount();"><i class="far fa-trash-alt"></i></a>
 				  			<a id="hapus" class="btn btn-warning btn-sm" name="edit"  	 href="edit/{{$row->id}}"><i class="fas fa-pen-nib"></i></a>
@@ -65,6 +62,8 @@
 				 </div>
 				</div>
 			</section>
+			{{-- tabel riwayat --}}
+			{{-- script --}}
 			<script type="text/javascript">
 			  function totalamount() {
 			    // var q = parseInt(getElementById('#total')).value;
@@ -95,6 +94,7 @@
 			    });
 			  });
 			</script>
+			{{-- script --}}
 		</body>
 		</html>
 		@endsection
